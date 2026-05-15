@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">NammaShaale Inventory</string>
+    <string name="add_asset">Add Asset</string>
+    <string name="login_welcome">Welcome Back</string>
+    <string name="login_subtitle">Login to your account</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="register_prompt">Don\'t have an account? Register</string>
+    <string name="create_account">Create Account</string>
+    <string name="register_subtitle">Register to start managing assets</string>
+    <string name="full_name_hint">Full Name</string>
+    <string name="email_hint_only">Email</string>
+    <string name="phone_hint">Phone Number</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="register_button">Register</string>
+    <string name="login_prompt">Already have an account? Login Here</string>
+
+    <!-- Onboarding Strings -->
+    <string name="onboarding_title_1">Track Every Asset</string>
+    <string name="onboarding_desc_1">Register tablets, lab equipment, sports kits and every school resource in one place.</string>
+    <string name="onboarding_title_2">Photo Documentation</string>
+    <string name="onboarding_desc_2">Capture photos of each asset with your camera so records are always visual &amp; accurate.</string>
+    <string name="onboarding_title_3">Request Repairs Fast</string>
+    <string name="onboarding_desc_3">Log issues, report damage and submit repair requests to SDMC with one tap.</string>
+    <string name="next_with_arrow">Next \u2192</string>
+    <string name="get_started_with_arrow">Get Started \u2192</string>
+    <string name="skip">Skip</string>
+
+    <!-- Dashboard Strings -->
+    <string name="dashboard_title">Dashboard</string>
+    <string name="good_morning_greeting">Good Morning! 👋</string>
+    <string name="dashboard_overview_subtitle">Here\'s your school asset overview</string>
+    <string name="total_assets_label">Total Registered Assets</string>
+    <string name="working_label">Working</string>
+    <string name="repair_label">Repair</string>
+    <string name="broken_label">Broken</string>
+    <string name="quick_actions_title">QUICK ACTIONS</string>
+    <string name="open_issues_title">Open Issues</string>
+    <string name="repairs_title">Repairs</string>
+    <string name="health_check_title">Health Check</string>
+    <string name="all_assets_title">All Assets</string>
+    <string name="recent_activity_title">RECENT ACTIVITY</string>
+    <string name="view_all_badge">View All</string>
+
+    <string name="unresolved_status">Unresolved</string>
+    <string name="open_badge">Open</string>
+    <string name="requests_status">Active Requests</string>
+    <string name="high_badge">High</string>
+    <string name="due_month">Due this month</string>
+    <string name="pending_badge">Pending</string>
+    <string name="registered_status">Registered</string>
+
+    <!-- Health Check & Issues -->
+    <string name="asset_condition_scores">ASSET CONDITION SCORES</string>
+    <string name="monthly_audit_title">Monthly Condition Audit</string>
+    <string name="issue_log_title">Issue Log</string>
+    <string name="repair_requests_title">Repair Requests</string>
+
+    <!-- Splash Screen -->
+    <string name="splash_app_name">Namma Shaale</string>
+    <string name="splash_subtitle">Inventory Management</string>
+    <string name="splash_logo_description">App Logo</string>
+
+    <!-- General UI -->
+    <string name="back_button_desc">Go Back</string>
+</resources>
