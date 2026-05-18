@@ -1,4 +1,4 @@
-````md
+<img width="1536" height="1024" alt="ChatGPT Image Apr 24, 2026, 01_08_34 PM" src="https://github.com/user-attachments/assets/b7ae8fd8-ac35-46ad-adda-c530c056f446" />````md
 # Namma-Shaale Inventory
 
 Digital Asset Auditor for Schools
@@ -161,6 +161,7 @@ Reports help school authorities monitor resources effectively.
 
 ---
 
+
 # Database Structure
 
 ## Asset Table
@@ -266,9 +267,16 @@ app/
 
 ## Dashboard Screen
 ![Dashboard](dashboard.png)
+<img width="698" height="1600" alt="Dashboard screen" src="https://github.com/user-attachments/assets/39f211f1-9573-494a-8788-6fe6dc4e4864" />
+
+
+
 
 ## Asset Register Screen
 ![Asset Register](assetregister.png)
+<img width="698" height="1600" alt="add assest screen" src="https://github.com/user-attachments/assets/1600ad65-f398-408b-985b-6d6746f6dd11" />
+
+
 
 ## Health Check Screen
 ![Health Check](healthcheck.png)
