@@ -2,77 +2,107 @@ package com.example.nammashaaleinventory.ui.dashboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nammashaaleinventory.R
+import com.example.nammashaaleinventory.data.model.Asset
+import com.example.nammashaaleinventory.databinding.ActivityDashboardBinding
+import com.example.nammashaaleinventory.ui.assets.AddAssetActivity
+import com.example.nammashaaleinventory.ui.assets.AssetAdapter
+import com.example.nammashaaleinventory.ui.assets.AssetDetailsActivity
 import com.example.nammashaaleinventory.ui.assets.AssetListActivity
-import com.example.nammashaaleinventory.ui.inventory.IssueLogActivity
-import com.example.nammashaaleinventory.ui.inventory.RepairsActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.nammashaaleinventory.ui.assets.ScanAssetActivity
+import com.example.nammashaaleinventory.ui.notifications.NotificationsActivity
+import com.example.nammashaaleinventory.ui.profile.ProfileActivity
+import com.example.nammashaaleinventory.ui.reports.ReportsActivity
 
 class DashboardActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityDashboardBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        setupSummary()
         setupQuickActions()
-        setupStatusCards()
-        setupRecentActivity()
         setupNavigation()
+        setupRecentAssets()
+        
+        binding.btnNotifications.setOnClickListener {
+            startActivity(Intent(this, NotificationsActivity::class.java))
+        }
+
+        binding.tvViewAll.setOnClickListener {
+            startActivity(Intent(this, AssetListActivity::class.java))
+        }
+    }
+
+    private fun setupSummary() {
+        binding.tvTotalAssets.text = "245"
+        binding.tvCountWorking.text = "198"
+        binding.tvCountRepair.text = "32"
+        binding.tvCountBroken.text = "15"
     }
 
     private fun setupQuickActions() {
-        val cardIssues = findViewById<View>(R.id.cardIssues)
-        val cardRepairs = findViewById<View>(R.id.cardRepairs)
-        val cardHealthCheck = findViewById<View>(R.id.cardHealthCheck)
-        val cardAssets = findViewById<View>(R.id.cardAssets)
-
-        cardIssues.setOnClickListener { startActivity(Intent(this, IssueLogActivity::class.java)) }
-        cardRepairs.setOnClickListener { startActivity(Intent(this, RepairsActivity::class.java)) }
-        cardHealthCheck.setOnClickListener { /* Navigate to Health Check */ }
-        cardAssets.setOnClickListener { startActivity(Intent(this, AssetListActivity::class.java)) }
-    }
-
-    private fun setupStatusCards() {
-        val tvCountWorking = findViewById<TextView>(R.id.tvCountWorking)
-        val tvCountRepair = findViewById<TextView>(R.id.tvCountRepair)
-        val tvCountBroken = findViewById<TextView>(R.id.tvCountBroken)
-
-        tvCountWorking.text = "42"
-        tvCountRepair.text = "5"
-        tvCountBroken.text = "3"
-    }
-
-    private fun setupRecentActivity() {
-        val container = findViewById<LinearLayout>(R.id.recentActivityContainer)
-        // Static items are already in XML, or you can add more here dynamically
+        binding.cardAddAsset.setOnClickListener {
+            startActivity(Intent(this, AddAssetActivity::class.java))
+        }
+        binding.cardScanAsset.setOnClickListener {
+            startActivity(Intent(this, ScanAssetActivity::class.java))
+        }
+        binding.cardAssets.setOnClickListener {
+            startActivity(Intent(this, AssetListActivity::class.java))
+        }
+        binding.cardReports.setOnClickListener {
+            startActivity(Intent(this, ReportsActivity::class.java))
+        }
     }
 
     private fun setupNavigation() {
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.selectedItemId = R.id.nav_home
-        bottomNav.setOnItemSelectedListener { item ->
+        binding.bottomNav.selectedItemId = R.id.nav_home
+        binding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> true
                 R.id.nav_assets -> {
                     startActivity(Intent(this, AssetListActivity::class.java))
                     false
                 }
-                R.id.nav_issues -> {
-                    startActivity(Intent(this, IssueLogActivity::class.java))
+                R.id.nav_scan -> {
+                    startActivity(Intent(this, ScanAssetActivity::class.java))
                     false
                 }
-                R.id.nav_repairs -> {
-                    startActivity(Intent(this, RepairsActivity::class.java))
+                R.id.nav_reports -> {
+                    startActivity(Intent(this, ReportsActivity::class.java))
+                    false
+                }
+                R.id.nav_profile -> {
+                    startActivity(Intent(this, ProfileActivity::class.java))
                     false
                 }
                 else -> false
             }
         }
+    }
+
+    private fun setupRecentAssets() {
+        val adapter = AssetAdapter()
+        adapter.setOnItemClickListener {
+            startActivity(Intent(this, AssetDetailsActivity::class.java))
+        }
+        binding.rvRecentAssets.adapter = adapter
+        binding.rvRecentAssets.layoutManager = LinearLayoutManager(this)
+        
+        adapter.submitList(getDummyRecentAssets())
+    }
+
+    private fun getDummyRecentAssets(): List<Asset> {
+        return listOf(
+            Asset(1, "Microscope - Bio Lab", "INV-00124", "Lab Equipment", "Working", "img_microscope"),
+            Asset(2, "Football - Sports Room", "INV-00123", "Sports", "Working", "img_football"),
+            Asset(3, "Wooden Table - Library", "INV-00122", "Furniture", "Needs Repair", "img_table")
+        )
     }
 }

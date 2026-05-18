@@ -1,0 +1,41 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="400dp"
+    android:height="200dp"
+    android:viewportWidth="400"
+    android:viewportHeight="200">
+    <!-- Ground -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M0,150h400v50h-400z" />
+    <path
+        android:fillColor="#388E3C"
+        android:pathData="M0,150c100,-10 300,-10 400,0v10h-400z" />
+
+    <!-- Building Body -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M100,60h200v90h-200z" />
+
+    <!-- Roof -->
+    <path
+        android:fillColor="#E57373"
+        android:pathData="M80,60l120,-30l120,30z" />
+
+    <!-- Door -->
+    <path
+        android:fillColor="#795548"
+        android:pathData="M185,120h30v30h-30z" />
+
+    <!-- Windows -->
+    <path
+        android:fillColor="#B3E5FC"
+        android:pathData="M120,80h30v20h-30z M250,80h30v20h-30z M120,110h30v20h-30z M250,110h30v20h-30z" />
+
+    <!-- Trees -->
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M40,150c0,-20 20,-40 40,-40s40,20 40,40z" />
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M320,150c0,-20 20,-40 40,-40s40,20 40,40z" />
+</vector>

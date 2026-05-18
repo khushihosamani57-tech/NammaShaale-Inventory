@@ -1,67 +1,70 @@
 <resources>
     <string name="app_name">NammaShaale Inventory</string>
-    <string name="add_asset">Add Asset</string>
-    <string name="login_welcome">Welcome Back</string>
-    <string name="login_subtitle">Login to your account</string>
-    <string name="email_hint">Email</string>
-    <string name="password_hint">Password</string>
-    <string name="login_button">Login</string>
-    <string name="register_prompt">Don\'t have an account? Register</string>
-    <string name="create_account">Create Account</string>
-    <string name="register_subtitle">Register to start managing assets</string>
-    <string name="full_name_hint">Full Name</string>
-    <string name="email_hint_only">Email</string>
-    <string name="phone_hint">Phone Number</string>
-    <string name="confirm_password_hint">Confirm Password</string>
-    <string name="register_button">Register</string>
-    <string name="login_prompt">Already have an account? Login Here</string>
-
-    <!-- Onboarding Strings -->
-    <string name="onboarding_title_1">Track Every Asset</string>
-    <string name="onboarding_desc_1">Register tablets, lab equipment, sports kits and every school resource in one place.</string>
-    <string name="onboarding_title_2">Photo Documentation</string>
-    <string name="onboarding_desc_2">Capture photos of each asset with your camera so records are always visual &amp; accurate.</string>
-    <string name="onboarding_title_3">Request Repairs Fast</string>
-    <string name="onboarding_desc_3">Log issues, report damage and submit repair requests to SDMC with one tap.</string>
-    <string name="next_with_arrow">Next \u2192</string>
-    <string name="get_started_with_arrow">Get Started \u2192</string>
-    <string name="skip">Skip</string>
-
-    <!-- Dashboard Strings -->
-    <string name="dashboard_title">Dashboard</string>
-    <string name="good_morning_greeting">Good Morning! 👋</string>
-    <string name="dashboard_overview_subtitle">Here\'s your school asset overview</string>
-    <string name="total_assets_label">Total Registered Assets</string>
-    <string name="working_label">Working</string>
-    <string name="repair_label">Repair</string>
-    <string name="broken_label">Broken</string>
-    <string name="quick_actions_title">QUICK ACTIONS</string>
-    <string name="open_issues_title">Open Issues</string>
-    <string name="repairs_title">Repairs</string>
-    <string name="health_check_title">Health Check</string>
-    <string name="all_assets_title">All Assets</string>
-    <string name="recent_activity_title">RECENT ACTIVITY</string>
-    <string name="view_all_badge">View All</string>
-
-    <string name="unresolved_status">Unresolved</string>
-    <string name="open_badge">Open</string>
-    <string name="requests_status">Active Requests</string>
-    <string name="high_badge">High</string>
-    <string name="due_month">Due this month</string>
-    <string name="pending_badge">Pending</string>
-    <string name="registered_status">Registered</string>
-
-    <!-- Health Check & Issues -->
-    <string name="asset_condition_scores">ASSET CONDITION SCORES</string>
-    <string name="monthly_audit_title">Monthly Condition Audit</string>
-    <string name="issue_log_title">Issue Log</string>
-    <string name="repair_requests_title">Repair Requests</string>
-
-    <!-- Splash Screen -->
-    <string name="splash_app_name">Namma Shaale</string>
-    <string name="splash_subtitle">Inventory Management</string>
+    <string name="splash_app_name">Namma-Shaale\nInventory</string>
+    <string name="splash_subtitle">School Asset Tracker</string>
     <string name="splash_logo_description">App Logo</string>
+    <string name="efficient_organized_reliable">Efficient • Organized • Reliable</string>
 
-    <!-- General UI -->
-    <string name="back_button_desc">Go Back</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="login_to_continue">Login to continue</string>
+    <string name="email_or_mobile">Email or Mobile</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login">Login</string>
+    <string name="dont_have_account">Don\'t have an account? </string>
+    <string name="sign_up">Sign Up</string>
+
+    <string name="dashboard">Dashboard</string>
+    <string name="hello_admin">Hello, Admin 👋</string>
+    <string name="inventory_overview">Here\'s your inventory overview</string>
+    <string name="total_assets">Total Assets</string>
+    <string name="working">Working</string>
+    <string name="needs_repair">Needs Repair</string>
+    <string name="out_of_order">Out of Order</string>
+    <string name="quick_actions">Quick Actions</string>
+    <string name="add_asset">Add Asset</string>
+    <string name="scan_asset">Scan Asset</string>
+    <string name="view_assets">View Assets</string>
+    <string name="reports">Reports</string>
+    <string name="recent_assets">Recent Assets</string>
+    <string name="view_all">View All</string>
+
+    <string name="all_assets">All Assets</string>
+    <string name="search_assets">Search assets…</string>
+    <string name="all">All</string>
+
+    <string name="add_new_asset">Add New Asset</string>
+    <string name="tap_to_add_photo">Tap to add photo</string>
+    <string name="asset_name_req">Asset Name*</string>
+    <string name="enter_asset_name">Enter asset name</string>
+    <string name="category_req">Category*</string>
+    <string name="select_category">Select category</string>
+    <string name="location_req">Location*</string>
+    <string name="select_location">Select location</string>
+    <string name="purchase_date_req">Purchase Date*</string>
+    <string name="date_format_hint">dd/mm/yyyy</string>
+    <string name="condition_req">Condition*</string>
+    <string name="select_condition">Select condition</string>
+    <string name="save_asset">Save Asset</string>
+
+    <string name="asset_details">Asset Details</string>
+    <string name="description">Description</string>
+    <string name="mark_as_repair">Mark as Repair</string>
+    <string name="mark_as_out_of_order">Mark as Out of Order</string>
+
+    <string name="notifications">Notifications</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+
+    <string name="create_account">Create Account</string>
+    <string name="signup_subtitle">Sign up to get started</string>
+    <string name="full_name">Full Name</string>
+    <string name="already_have_account">Already have an account? </string>
+
+    <string name="back_button_desc">Go back</string>
+
+    <string name="edit_profile_image">Edit Profile Image</string>
+    <string name="asset_visual_report">Asset Visual Report</string>
+    <string name="scan_instruction">Place QR code within the frame</string>
+    <string name="scan_status">Scanning will start automatically</string>
 </resources>

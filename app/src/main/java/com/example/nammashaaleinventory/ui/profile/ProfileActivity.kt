@@ -4,116 +4,116 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
+import android.provider.MediaStore
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.example.nammashaaleinventory.databinding.ActivityProfileBinding
+import com.example.nammashaaleinventory.R
 import com.example.nammashaaleinventory.ui.auth.LoginActivity
+import com.example.nammashaaleinventory.ui.dashboard.DashboardActivity
+import com.example.nammashaaleinventory.ui.assets.AssetListActivity
+import com.example.nammashaaleinventory.ui.assets.ScanAssetActivity
+import com.example.nammashaaleinventory.ui.reports.ReportsActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityProfileBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
-    private var selectedImageUri: Uri? = null
+    private lateinit var ivProfile: ImageView
 
-    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let {
-            selectedImageUri = it
-            binding.ivProfile.setImageURI(it)
-            // In a real app, you would upload this to Firebase Storage
-            Toast.makeText(this, "Profile image updated locally", Toast.LENGTH_SHORT).show()
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val imageUri: Uri? = result.data?.data
+            if (imageUri != null) {
+                ivProfile.setImageURI(imageUri)
+                ivProfile.clearColorFilter()
+                Toast.makeText(this, "Profile image updated locally", Toast.LENGTH_SHORT).show()
+                // In a real app, you would upload this to Firebase Storage here
+            }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_profile)
 
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
-
-        setupProfileData()
-
-        binding.btnBack.setOnClickListener {
-            finish()
+        ivProfile = findViewById(R.id.ivProfile)
+        
+        setupProfileInfo()
+        setupMenuActions()
+        setupNavigation()
+        
+        findViewById<FloatingActionButton>(R.id.btnEditProfileImage).setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            pickImageLauncher.launch(intent)
         }
+    }
 
-        binding.btnSave.setOnClickListener {
-            saveProfileChanges()
+    private fun setupProfileInfo() {
+        val user = FirebaseAuth.getInstance().currentUser
+        findViewById<TextView>(R.id.tvName).text = "Admin User"
+        findViewById<TextView>(R.id.tvEmail).text = user?.email ?: "admin@school.com"
+        findViewById<TextView>(R.id.tvRole).text = "Administrator"
+    }
+
+    private fun setupMenuActions() {
+        findViewById<android.view.View>(R.id.menuMyProfile).setOnClickListener {
+            // Navigate to personal profile edit
         }
-
-        binding.btnLogout.setOnClickListener {
-            auth.signOut()
+        
+        findViewById<android.view.View>(R.id.btnLogout).setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
         }
-
-        binding.cardProfileImage.setOnClickListener {
-            pickImageLauncher.launch("image/*")
-        }
+        
+        // Setup labels for included menu items
+        setupMenuItem(R.id.menuMyProfile, "My Profile", android.R.drawable.ic_menu_myplaces)
+        setupMenuItem(R.id.menuSchoolDetails, "School Details", android.R.drawable.ic_menu_agenda)
+        setupMenuItem(R.id.menuUsers, "Users & Permissions", android.R.drawable.ic_menu_myplaces)
+        setupMenuItem(R.id.menuBackup, "Backup & Restore", android.R.drawable.ic_menu_save)
+        setupMenuItem(R.id.menuSettings, "Settings", android.R.drawable.ic_menu_manage)
+    }
+    
+    private fun setupMenuItem(id: Int, title: String, iconRes: Int) {
+        val view = findViewById<android.view.View>(id)
+        view.findViewById<TextView>(R.id.tvTitle).text = title
+        view.findViewById<android.widget.ImageView>(R.id.ivIcon).setImageResource(iconRes)
     }
 
-    private fun setupProfileData() {
-        val userId = auth.currentUser?.uid
-        val email = auth.currentUser?.email
-
-        binding.etEmail.setText(email)
-
-        if (userId != null) {
-            binding.progressBar.visibility = View.VISIBLE
-            db.collection("users").document(userId).get()
-                .addOnSuccessListener { document ->
-                    binding.progressBar.visibility = View.GONE
-                    if (document != null && document.exists()) {
-                        val name = document.getString("name")
-                        val phone = document.getString("phone")
-                        
-                        binding.etName.setText(name)
-                        binding.etPhone.setText(phone)
-                    }
+    private fun setupNavigation() {
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNav.selectedItemId = R.id.nav_profile
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    startActivity(Intent(this, DashboardActivity::class.java))
+                    finish()
+                    true
                 }
-                .addOnFailureListener {
-                    binding.progressBar.visibility = View.GONE
-                    Toast.makeText(this, "Failed to load profile", Toast.LENGTH_SHORT).show()
+                R.id.nav_assets -> {
+                    startActivity(Intent(this, AssetListActivity::class.java))
+                    finish()
+                    false
                 }
-        }
-    }
-
-    private fun saveProfileChanges() {
-        val userId = auth.currentUser?.uid ?: return
-        val name = binding.etName.text.toString().trim()
-        val phone = binding.etPhone.text.toString().trim()
-
-        if (name.isEmpty()) {
-            binding.etName.error = "Name cannot be empty"
-            return
-        }
-
-        val profileUpdates = mutableMapOf<String, Any>(
-            "name" to name,
-            "phone" to phone
-        )
-
-        binding.progressBar.visibility = View.VISIBLE
-        binding.btnSave.isEnabled = false
-
-        db.collection("users").document(userId).update(profileUpdates)
-            .addOnSuccessListener {
-                binding.progressBar.visibility = View.GONE
-                binding.btnSave.isEnabled = true
-                Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                R.id.nav_scan -> {
+                    startActivity(Intent(this, ScanAssetActivity::class.java))
+                    finish()
+                    false
+                }
+                R.id.nav_reports -> {
+                    startActivity(Intent(this, ReportsActivity::class.java))
+                    finish()
+                    false
+                }
+                R.id.nav_profile -> true
+                else -> false
             }
-            .addOnFailureListener { e ->
-                binding.progressBar.visibility = View.GONE
-                binding.btnSave.isEnabled = true
-                Toast.makeText(this, "Error updating profile: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+        }
     }
 }

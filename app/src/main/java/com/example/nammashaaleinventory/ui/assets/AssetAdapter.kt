@@ -1,43 +1,64 @@
 package com.example.nammashaaleinventory.ui.assets
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nammashaaleinventory.R
 import com.example.nammashaaleinventory.data.model.Asset
-import com.google.android.material.chip.Chip
+import com.example.nammashaaleinventory.databinding.ItemAssetBinding
 
 class AssetAdapter : ListAdapter<Asset, AssetAdapter.AssetViewHolder>(AssetDiffCallback()) {
 
+    private var onItemClickListener: ((Asset) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Asset) -> Unit) {
+        onItemClickListener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AssetViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_asset, parent, false)
-        return AssetViewHolder(view)
+        val binding = ItemAssetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return AssetViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: AssetViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val asset = getItem(position)
+        holder.bind(asset)
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.invoke(asset)
+        }
     }
 
-    class AssetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvName: TextView = itemView.findViewById(R.id.tvAssetName)
-        private val tvCategory: TextView = itemView.findViewById(R.id.tvAssetCategory)
-        private val chipCondition: Chip = itemView.findViewById(R.id.chipCondition)
+    class AssetViewHolder(private val binding: ItemAssetBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(asset: Asset) {
-            tvName.text = asset.name
-            tvCategory.text = asset.category
-            chipCondition.text = asset.condition
+            binding.tvAssetName.text = asset.name
+            binding.tvAssetDetails.text = "INV-${asset.serialNumber.ifEmpty { asset.id.toString() }}"
+            binding.tvStatus.text = asset.condition
             
-            // Set chip color or icon based on condition if desired
-            if (asset.condition.contains("Working", ignoreCase = true)) {
-                chipCondition.setChipIconResource(android.R.drawable.presence_online)
+            // Set color based on condition
+            val colorRes = when {
+                asset.condition.contains("Working", ignoreCase = true) -> R.color.working_green
+                asset.condition.contains("Repair", ignoreCase = true) -> R.color.repair_orange
+                else -> R.color.broken_red
+            }
+            binding.tvStatus.setTextColor(binding.root.context.getColor(colorRes))
+            
+            // Display asset image if provided, otherwise show default icon
+            if (asset.imageUri.isNotEmpty()) {
+                val context = binding.root.context
+                val resourceId = context.resources.getIdentifier(asset.imageUri, "drawable", context.packageName)
+                if (resourceId != 0) {
+                    binding.ivAssetIcon.setImageResource(resourceId)
+                    binding.ivAssetIcon.setPadding(0, 0, 0, 0) // Remove padding for full images
+                } else {
+                    binding.ivAssetIcon.setImageResource(R.drawable.ic_assets)
+                    binding.ivAssetIcon.setPadding(10, 10, 10, 10)
+                }
             } else {
-                chipCondition.setChipIconResource(android.R.drawable.presence_busy)
+                binding.ivAssetIcon.setImageResource(R.drawable.ic_assets)
+                binding.ivAssetIcon.setPadding(10, 10, 10, 10)
             }
         }
     }
